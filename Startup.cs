@@ -40,6 +40,7 @@ namespace SportyApi
             services.Configure<JWT>(Configuration.GetSection("JWT"));
 
             services.AddMemoryCache();
+            services.AddHttpContextAccessor();
 
             services.AddTransient<IMailService, MailService>();
             services.AddControllers();
