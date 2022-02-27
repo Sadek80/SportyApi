@@ -1,4 +1,5 @@
-﻿using SportyApi.Models.Core.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using SportyApi.Models.Core.Domain;
 using SportyApi.Models.Core.DTOs.ProductDtos;
 using SportyApi.Models.Core.Repositories;
 using SportyApi.ResourceParameters;
@@ -18,19 +19,40 @@ namespace SportyApi.Models.Persistence.Repositories
             _dataContext = dataContext;
         }
 
-        public Task AddProductAsync(Product product)
+        public async Task AddProductAsync(Product product)
         {
-            throw new NotImplementedException();
+            await _dataContext.AddAsync(product);
         }
 
-        public Task<IEnumerable<Product>> GetAllProductsAsync(BaseResourceParametersForSearchAndFilter parameters)
+        public async Task<IEnumerable<Product>> GetAllProductsAsync(BaseResourceParametersForSearchAndFilter parameters)
         {
-            throw new NotImplementedException();
+            var products = _dataContext.Products as IQueryable<Product>;
+
+            if (!string.IsNullOrWhiteSpace(parameters.SearchQuery))
+            {
+                var searchQuery = parameters.SearchQuery.Trim();
+
+                products = products.Where(p => p.Name.Contains(searchQuery) ||
+                                               p.Brand.Contains(searchQuery) ||
+                                               p.Sport.Name.Contains(searchQuery));
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.FilterBy))
+            {
+                var filterBy = parameters.FilterBy.Trim();
+
+                products = products.Where(p => p.Sport.Name == filterBy);
+            }
+
+            return await products.ToListAsync();
         }
 
-        public Task<Product> GetProductByIdAsync(Guid productId)
+        public async Task<Product> GetProductByIdAsync(Guid productId)
         {
-            throw new NotImplementedException();
+            if (productId == Guid.Empty)
+                throw new ArgumentNullException(nameof(productId));
+
+            return await _dataContext.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
         }
     }
 }
