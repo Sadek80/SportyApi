@@ -40,8 +40,15 @@ namespace SportyApi.Controllers
         [HttpGet("{productId}")]
         public async Task<IActionResult> GetProductById(Guid productId)
         {
-            //throw new NotImplementedException();
-            return Ok(productId);
+            if (productId == Guid.Empty)
+                return BadRequest("Invalid Product");
+
+            var product = await _unitOfWork.ProductRepository.GetProductByIdAsync(productId);
+
+            if (product is null)
+                return NotFound("Product Not Found");
+
+            return Ok(_mapper.Map<ProductDto>(product));
         }
         
         [HttpPost]
