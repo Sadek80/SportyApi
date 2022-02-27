@@ -17,12 +17,12 @@ namespace SportyApi.Models.Persistence.Repositories
             _dataContext = dataContext;
         }
 
-        public Task<bool> AddOrder(Order order, string userId)
+        public Task AddOrderAsync(Order order, string userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Order>> GetUserOrdersHistory(string userId)
+        public Task<IEnumerable<Order>> GetUserOrdersHistoryAsync(string userId)
         {
             throw new NotImplementedException();
         }

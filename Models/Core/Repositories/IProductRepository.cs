@@ -10,9 +10,8 @@ namespace SportyApi.Models.Core.Repositories
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetAllProducts(BaseResourceParametersForSearchAndFilter parameters);
-        Task<Product> GetProductById(Guid productId);
-        Task AddProduct(Product product);
-
+        Task<IEnumerable<Product>> GetAllProductsAsync(BaseResourceParametersForSearchAndFilter parameters);
+        Task<Product> GetProductByIdAsync(Guid productId);
+        Task AddProductAsync(Product product);
     }
 }

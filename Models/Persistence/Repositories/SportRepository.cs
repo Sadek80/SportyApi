@@ -15,12 +15,12 @@ namespace SportyApi.Models.Persistence.Repositories
         {
             _dataContext = dataContext;
         }
-        public Task<bool> AddUserInterests(IEnumerable<Guid> SportsGuids)
+        public Task AddUserInterestsAsync(IEnumerable<Guid> SportsGuids)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Sport>> GetAllSprts()
+        public Task<IEnumerable<Sport>> GetAllSprtsAsync()
         {
             throw new NotImplementedException();
         }

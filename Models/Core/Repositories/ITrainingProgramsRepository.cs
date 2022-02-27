@@ -10,10 +10,10 @@ namespace SportyApi.Models.Core.Repositories
 {
     public interface ITrainingProgramsRepository
     {
-        Task<IEnumerable<TrainingProgram>> GetAllTrainingPrograms(BaseResourceParametersForSearchAndFilter parameters);
-        Task<TrainingProgram> GetTrainingProgramById(Guid trainingProgramId);
-        Task<IEnumerable<ReservedProgram>> GeyUserReservedTrainingPrograms(string userId);
-        Task AddTrainingProgram(TrainingProgram trainingProgram);
-        Task EnrollToTrainingProgram(string userId, Guid programId);
+        Task<IEnumerable<TrainingProgram>> GetAllTrainingProgramsAsync(BaseResourceParametersForSearchAndFilter parameters);
+        Task<TrainingProgram> GetTrainingProgramByIdAsync(Guid trainingProgramId);
+        Task<IEnumerable<ReservedProgram>> GeyUserReservedTrainingProgramsAsync(string userId);
+        Task AddTrainingProgramAsync(TrainingProgram trainingProgram);
+        Task EnrollToTrainingProgramAsync(string userId, Guid programId);
     }
 }

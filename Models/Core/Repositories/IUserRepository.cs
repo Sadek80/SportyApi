@@ -8,9 +8,9 @@ namespace SportyApi.Models.Core.Repositories
 {
     public interface IUserRepository
     {
-        Task<UserForProfileDto> GetUserProfile(string userId);
-        Task<bool> UpdateUserProfile(UserForUpdateDto userForUpdate, string userId);
-        Task<UserForCartDto> GetUserPaymentData(string userId);
+        Task<UserForProfileDto> GetUserProfileAsync(string userId);
+        Task UpdateUserProfileAsync(UserForUpdateDto userForUpdate, string userId);
+        Task<UserForCartDto> GetUserPaymentDataAsync(string userId);
 
     }
 }

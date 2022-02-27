@@ -18,17 +18,17 @@ namespace SportyApi.Models.Persistence.Repositories
             _dataContext = dataContext;
         }
 
-        public Task AddProduct(Product product)
+        public Task AddProductAsync(Product product)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Product>> GetAllProducts(BaseResourceParametersForSearchAndFilter parameters)
+        public Task<IEnumerable<Product>> GetAllProductsAsync(BaseResourceParametersForSearchAndFilter parameters)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Product> GetProductById(Guid productId)
+        public Task<Product> GetProductByIdAsync(Guid productId)
         {
             throw new NotImplementedException();
         }

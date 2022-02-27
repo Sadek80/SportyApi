@@ -18,27 +18,27 @@ namespace SportyApi.Models.Persistence.Repositories
             _dataContext = dataContext;
         }
 
-        public Task AddTrainingProgram(TrainingProgram trainingProgram)
+        public Task AddTrainingProgramAsync(TrainingProgram trainingProgram)
         {
             throw new NotImplementedException();
         }
 
-        public Task EnrollToTrainingProgram(string userId, Guid programId)
+        public Task EnrollToTrainingProgramAsync(string userId, Guid programId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TrainingProgram>> GetAllTrainingPrograms(BaseResourceParametersForSearchAndFilter parameters)
+        public Task<IEnumerable<TrainingProgram>> GetAllTrainingProgramsAsync(BaseResourceParametersForSearchAndFilter parameters)
         {
             throw new NotImplementedException();
         }
 
-        public Task<TrainingProgram> GetTrainingProgramById(Guid trainingProgramId)
+        public Task<TrainingProgram> GetTrainingProgramByIdAsync(Guid trainingProgramId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ReservedProgram>> GeyUserReservedTrainingPrograms(string userId)
+        public Task<IEnumerable<ReservedProgram>> GeyUserReservedTrainingProgramsAsync(string userId)
         {
             throw new NotImplementedException();
         }

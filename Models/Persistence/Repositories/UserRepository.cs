@@ -16,17 +16,17 @@ namespace SportyApi.Models.Persistence.Repositories
             _dataContext = dataContext;
         }
 
-        public Task<UserForCartDto> GetUserPaymentData(string userId)
+        public Task<UserForCartDto> GetUserPaymentDataAsync(string userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<UserForProfileDto> GetUserProfile(string userId)
+        public Task<UserForProfileDto> GetUserProfileAsync(string userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateUserProfile(UserForUpdateDto userForUpdate, string userId)
+        public Task UpdateUserProfileAsync(UserForUpdateDto userForUpdate, string userId)
         {
             throw new NotImplementedException();
         }
