@@ -12,7 +12,7 @@ namespace SportyApi.Models.Core.DTOs.TrainingProgramsDtos
         [Required]
         public override string Name { get => base.Name; set => base.Name = value; }
         [Required]
-        public override string SportName { get => base.SportName; set => base.SportName = value; }
+        public Guid SportId { get; set; }
         [Required]
         public override string Level { get => base.Level; set => base.Level = value; }
         [Required]

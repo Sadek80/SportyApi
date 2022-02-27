@@ -18,7 +18,7 @@ namespace SportyApi.Models.Persistence.Repositories
             _dataContext = dataContext;
         }
 
-        public Task<bool> AddProduct(Product product)
+        public Task AddProduct(Product product)
         {
             throw new NotImplementedException();
         }

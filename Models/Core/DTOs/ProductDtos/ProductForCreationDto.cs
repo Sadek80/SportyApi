@@ -15,7 +15,7 @@ namespace SportyApi.Models.Core.DTOs.ProductDtos
         [Range(1.0, double.MaxValue)]
         public override double Price { get => base.Price; set => base.Price = value; }
         [Required]
-        public string SportName { get; set; }
+        public Guid SportId{ get; set; }
         [Required]
         public string Description { get; set; }
         [Required]

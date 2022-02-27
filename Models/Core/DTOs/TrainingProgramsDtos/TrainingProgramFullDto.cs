@@ -14,5 +14,7 @@ namespace SportyApi.Models.Core.DTOs.TrainingProgramsDtos
         public string Provider { get; set; }
         public string Location { get; set; }
         public double PricePerMonth { get; set; }
+        public string SportName { get; set; }
+
     }
 }

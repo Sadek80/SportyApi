@@ -9,7 +9,6 @@ namespace SportyApi.Models.Core.DTOs.Base_Dtos
     {
         public virtual string Name { get; set; }
         //public virtual string ImageUrl { get; set; }
-        public virtual string SportName { get; set; }
         public virtual string Level { get; set; }
     }
 }

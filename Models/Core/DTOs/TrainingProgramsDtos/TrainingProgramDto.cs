@@ -11,5 +11,7 @@ namespace SportyApi.Models.Core.DTOs.TrainingProgramsDtos
         public Guid TrainingProgramId { get; set; }
         public string ImageUrl { get; set; }
         public string DescriptionMinimized { get; set; }
+        public string SportName { get; set; }
+
     }
 }

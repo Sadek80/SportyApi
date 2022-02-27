@@ -12,6 +12,7 @@ namespace SportyApi.Models.Core.DTOs.ProductDtos
         public string ImageUrl { get; set; }
         public string Brand { get; set; }
         public string Description { get; set; }
+        public string SportName { get; set; }
         public bool IsOutOfStock { get; set; }
         public string Message { get; set; }
         public bool Success { get; set; }

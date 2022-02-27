@@ -18,12 +18,12 @@ namespace SportyApi.Models.Persistence.Repositories
             _dataContext = dataContext;
         }
 
-        public Task<bool> AddTrainingProgram(TrainingProgram trainingProgram)
+        public Task AddTrainingProgram(TrainingProgram trainingProgram)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> EnrollToTrainingProgram(string userId, Guid programId)
+        public Task EnrollToTrainingProgram(string userId, Guid programId)
         {
             throw new NotImplementedException();
         }

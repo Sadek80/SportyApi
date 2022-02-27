@@ -12,7 +12,7 @@ namespace SportyApi.Models.Core.Repositories
     {
         Task<IEnumerable<Product>> GetAllProducts(BaseResourceParametersForSearchAndFilter parameters);
         Task<Product> GetProductById(Guid productId);
-        Task<bool> AddProduct(Product product);
+        Task AddProduct(Product product);
 
     }
 }

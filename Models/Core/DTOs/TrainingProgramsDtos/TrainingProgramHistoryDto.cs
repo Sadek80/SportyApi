@@ -10,5 +10,7 @@ namespace SportyApi.Models.Core.DTOs.TrainingProgramsDtos
     {
         public string DescriptionMinimized { get; set; }
         public DateTimeOffset Date { get; set; }
+        public string SportName { get; set; }
+
     }
 }

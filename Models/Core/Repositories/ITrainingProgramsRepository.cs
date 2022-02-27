@@ -13,7 +13,7 @@ namespace SportyApi.Models.Core.Repositories
         Task<IEnumerable<TrainingProgram>> GetAllTrainingPrograms(BaseResourceParametersForSearchAndFilter parameters);
         Task<TrainingProgram> GetTrainingProgramById(Guid trainingProgramId);
         Task<IEnumerable<ReservedProgram>> GeyUserReservedTrainingPrograms(string userId);
-        Task<bool> AddTrainingProgram(TrainingProgram trainingProgram);
-        Task<bool> EnrollToTrainingProgram(string userId, Guid programId);
+        Task AddTrainingProgram(TrainingProgram trainingProgram);
+        Task EnrollToTrainingProgram(string userId, Guid programId);
     }
 }

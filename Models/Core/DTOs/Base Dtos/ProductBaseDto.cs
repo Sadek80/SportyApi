@@ -9,6 +9,5 @@ namespace SportyApi.Models.Core.DTOs.Base_Dtos
     {
         public virtual string Name { get; set; }
         public virtual double Price { get; set; }
-        public virtual string SportName { get; set; }
     }
 }
