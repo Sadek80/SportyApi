@@ -50,11 +50,13 @@ namespace SportyApi
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddSingleton(provider => new MapperConfiguration(cfg =>
             {
+                cfg.AddProfile(new UserProfile());
                 cfg.AddProfile(new ProductProfile(provider));
+                cfg.AddProfile(new TrainingProgramProfile(provider));
             }).CreateMapper());
 
             services.AddAuthentication(options =>
