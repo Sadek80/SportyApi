@@ -23,11 +23,6 @@ namespace SportyApi.Models.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Product>> GetAllProducts()
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IEnumerable<Product>> GetAllProducts(BaseResourceParametersForSearchAndFilter parameters)
         {
             throw new NotImplementedException();

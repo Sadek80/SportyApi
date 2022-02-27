@@ -28,11 +28,6 @@ namespace SportyApi.Models.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TrainingProgram>> GetAllTrainingPrograms()
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IEnumerable<TrainingProgram>> GetAllTrainingPrograms(BaseResourceParametersForSearchAndFilter parameters)
         {
             throw new NotImplementedException();
