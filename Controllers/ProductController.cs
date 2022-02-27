@@ -48,7 +48,7 @@ namespace SportyApi.Controllers
             if (product is null)
                 return NotFound("Product Not Found");
 
-            return Ok(_mapper.Map<ProductDto>(product));
+            return Ok(_mapper.Map<ProductFullDto>(product));
         }
         
         [HttpPost]

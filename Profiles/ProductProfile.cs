@@ -20,6 +20,12 @@ namespace SportyApi.Profiles
             CreateMap<Product, ProductDto>()
                 .ForMember(p => p.SportName, ps => ps.MapFrom(s => s.Sport.Name))
                 .ForMember(p => p.ImageUrl, pi => pi.MapFrom(i => $"{root}{i.ImageUrl}"));
+
+            CreateMap<Product, ProductFullDto>()
+                .ForMember(p => p.SportName, ps => ps.MapFrom(s => s.Sport.Name))
+                .ForMember(p => p.ImageUrl, pi => pi.MapFrom(i => $"{root}{i.ImageUrl}"))
+                .ForMember(p => p.IsOutOfStock, po => po.MapFrom(o => o.Quantity == 0));
+            
         }
     }
 }
