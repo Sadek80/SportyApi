@@ -21,12 +21,13 @@ namespace SportyApi.Models.Persistence.Repositories
 
         public async Task AddProductAsync(Product product)
         {
+            product.ProductId = Guid.NewGuid();
             await _dataContext.AddAsync(product);
         }
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync(BaseResourceParametersForSearchAndFilter parameters)
         {
-            var products = _dataContext.Products as IQueryable<Product>;
+            var products = _dataContext.Products.Include(p => p.Sport) as IQueryable<Product>;
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchQuery))
             {
@@ -52,7 +53,7 @@ namespace SportyApi.Models.Persistence.Repositories
             if (productId == Guid.Empty)
                 throw new ArgumentNullException(nameof(productId));
 
-            return await _dataContext.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+            return await _dataContext.Products.Include(p => p.Sport).FirstOrDefaultAsync(p => p.ProductId == productId);
         }
     }
 }

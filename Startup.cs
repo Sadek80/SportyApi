@@ -16,6 +16,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using SportyApi.Profiles;
 
 namespace SportyApi
 {
@@ -48,6 +51,11 @@ namespace SportyApi
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddSingleton(provider => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new ProductProfile(provider));
+            }).CreateMapper());
 
             services.AddAuthentication(options =>
             {

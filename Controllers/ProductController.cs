@@ -29,8 +29,12 @@ namespace SportyApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts([FromQuery] BaseResourceParametersForSearchAndFilter parameters)
         {
-            //throw new NotImplementedException();
-            return Ok(parameters);
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var products = await _unitOfWork.ProductRepository.GetAllProductsAsync(parameters);
+
+            return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
 
         [HttpGet("{productId}")]

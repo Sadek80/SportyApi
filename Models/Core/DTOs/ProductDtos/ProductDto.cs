@@ -11,5 +11,7 @@ namespace SportyApi.Models.Core.DTOs.ProductDtos
         public Guid ProductId { get; set; }
         public string DescriptionMinimized { get; set; }
         public string ImageUrl { get; set; }
-    }
+        public string Brand { get; set; }
+        public string SportName{ get; set; }
+    }   
 }
