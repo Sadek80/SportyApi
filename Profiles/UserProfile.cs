@@ -13,6 +13,9 @@ namespace SportyApi.Profiles
                 .ForMember(u => u.Name, a => a.MapFrom(a => $"{a.FirstName} {a.LastName}"));
             CreateMap<UserDto, UserDtoMinimized>();
             CreateMap<UserForSignUpDto, ApplicationUser>();
+            CreateMap<UserCreditCard, CreditCardDto>();
+            CreateMap<ApplicationUser, UserForProfileDto>()
+                .ForMember(u => u.Name, a => a.MapFrom(a => $"{a.FirstName} {a.LastName}")); ;
         }
     }
 }

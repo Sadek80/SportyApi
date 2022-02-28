@@ -30,7 +30,7 @@ namespace SportyApi.Models.Persistence
             AuthRepository = new AuthRepository(userManager, jwtOptions, mailService, mapper);
             ProductRepository = new ProductRepository(dataContext);
             TrainingProgramsRepository = new TrainingProgramsRepository(dataContext);
-            UserRepository = new UserRepository(dataContext);
+            UserRepository = new UserRepository(dataContext, userManager, mapper);
             SportRepository = new SportRepository(dataContext);
             OrderRepository = new OrderRepository(dataContext);
         }

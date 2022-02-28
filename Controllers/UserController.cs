@@ -28,9 +28,32 @@ namespace SportyApi.Controllers
         [HttpGet("profile")]
         public async Task<IActionResult> GetUserProfile()
         {
-            //throw new NotImplementedException();
             var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
-            return Ok(new { uid });
+
+            var userForProfile = await _unitOfWork.UserRepository.GetUserProfileAsync(uid);
+
+            if (!userForProfile.Success)
+                return StatusCode(userForProfile.StatusCode, userForProfile.Message);
+
+            return Ok(new { id = uid, Name = userForProfile.Name, Email = userForProfile.Email, 
+                                                                                    userForProfile.Address, userForProfile.CreditCards});
+        }
+
+        [HttpGet("payment-data")]
+        public async Task<IActionResult> GetUserPaymentData()
+        {
+            var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
+
+            var userForCartDto = await _unitOfWork.UserRepository.GetUserPaymentDataAsync(uid);
+
+            if (!userForCartDto.Success)
+                return StatusCode(userForCartDto.StatusCode, userForCartDto.Message);
+
+            return Ok(new
+            {
+               userForCartDto.Address,
+               userForCartDto.CreditCards
+            });
         }
 
         [HttpPut("profile")]
