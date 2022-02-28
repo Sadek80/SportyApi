@@ -35,8 +35,14 @@ namespace SportyApi.Controllers
             if (!userForProfile.Success)
                 return StatusCode(userForProfile.StatusCode, userForProfile.Message);
 
-            return Ok(new { id = uid, Name = userForProfile.Name, Email = userForProfile.Email, 
-                                                                                    userForProfile.Address, userForProfile.CreditCards});
+            return Ok(new 
+            {
+                id = uid,
+                userForProfile.Name, 
+                userForProfile.Email,
+                userForProfile.Address, 
+                userForProfile.CreditCards
+            });
         }
 
         [HttpGet("payment-data")]
@@ -59,9 +65,23 @@ namespace SportyApi.Controllers
         [HttpPut("profile")]
         public async Task<IActionResult> UpdateUserProfile([FromBody] UserForUpdateDto userForUpdateDto)
         {
-            //throw new NotImplementedException();
             var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
-            return Ok(new { id = uid, userForUpdateDto });
+
+            var userForProfile = await _unitOfWork.UserRepository.UpdateUserProfileAsync(userForUpdateDto, uid);
+
+            if (!userForProfile.Success)
+                return StatusCode(userForProfile.StatusCode, userForProfile.Message);
+
+           await _unitOfWork.Save();
+
+            return Ok(new
+            {
+                id = uid,
+                userForProfile.Name,
+                userForProfile.Email,
+                userForProfile.Address,
+                userForProfile.CreditCards
+            });
         }
     }
 }
