@@ -46,6 +46,8 @@ namespace SportyApi
             services.AddHttpContextAccessor();
 
             services.AddTransient<IMailService, MailService>();
+            services.AddTransient<ICreditCardValidationService, CreditCardValidationService>();
+
             services.AddControllers();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -55,6 +57,7 @@ namespace SportyApi
             services.AddSingleton(provider => new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new UserProfile());
+                cfg.AddProfile(new OrderProfile());
                 cfg.AddProfile(new ProductProfile(provider));
                 cfg.AddProfile(new TrainingProgramProfile(provider));
             }).CreateMapper());

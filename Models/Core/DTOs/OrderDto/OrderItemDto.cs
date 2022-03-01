@@ -8,6 +8,6 @@ namespace SportyApi.Models.Core.DTOs.OrderDto
 {
     public class OrderItemDto : OrderItemBaseDto
     {
-        public string ProductName { get; set; }
+        public string Name { get; set; }
     }
 }

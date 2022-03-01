@@ -22,6 +22,8 @@ namespace SportyApi.Models.Core.Domain
         public string UserId { get; set; }
         public List<OrderItem> OrderItems { get; set; }
         [Required]
-        public OrderPaymentData OrderPaymentData{ get; set; }
+        public Address Address{ get; set; }
+        [Required]
+        public OrderCreditCard CreditCard{ get; set; }
     }
 }

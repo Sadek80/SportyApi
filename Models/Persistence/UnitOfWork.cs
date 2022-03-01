@@ -23,16 +23,17 @@ namespace SportyApi.Models.Persistence
 
         public UnitOfWork(AppDataContext dataContext, UserManager<ApplicationUser> userManager,
                                     IOptions<JWT> jwtOptions, IMailService mailService,
-                                    IMapper mapper)
+                                    IMapper mapper,
+                                    ICreditCardValidationService cardValidationService)
         {
             _dataContext = dataContext;
 
             AuthRepository = new AuthRepository(userManager, jwtOptions, mailService, mapper);
             ProductRepository = new ProductRepository(dataContext);
             TrainingProgramsRepository = new TrainingProgramsRepository(dataContext);
-            UserRepository = new UserRepository(dataContext, userManager, mapper);
+            UserRepository = new UserRepository(dataContext, userManager, mapper, cardValidationService);
             SportRepository = new SportRepository(dataContext);
-            OrderRepository = new OrderRepository(dataContext);
+            OrderRepository = new OrderRepository(dataContext, userManager, mapper, cardValidationService);
         }
 
         public async Task<int> Save()

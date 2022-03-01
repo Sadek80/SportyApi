@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SportyApi.Models.Core.Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace SportyApi.Controllers
 {
@@ -28,18 +30,55 @@ namespace SportyApi.Controllers
         [HttpGet("history")]
         public async Task<IActionResult> GetUserOrdersHistory()
         {
-            //throw new NotImplementedException();
             var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
-            return Ok(new { uid });
+
+            var orders = await _unitOfWork.OrderRepository.GetUserOrdersHistoryAsync(uid);
+
+            if (orders is null)
+                return BadRequest("Invalid User");
+
+            if (orders.Count == 0)
+                return Ok("There's no orders yet");
+
+            var ordersHistory = _mapper.Map<List<OrderHistoryDto>>(orders);
+
+            for(int i = 0; i < ordersHistory.Count; i++)
+            {
+                ordersHistory[i].CreditCardNumber = orders[i].CreditCard.CreditCardNumber;
+                ordersHistory[i].ProductsDetails = _mapper.Map<List<OrderItemDto>>(orders[i].OrderItems);
+            }
+
+
+            return Ok(_mapper.Map<List<OrderHistoryMinimizedDto>>(ordersHistory));
         }
 
         [HttpPost]
         public async Task<IActionResult> MakeAnOrder([FromBody] OrderForCreationDto orderForCreationDto)
         {
-            //throw new NotImplementedException();
-            var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
-            return Ok(new { id = uid, orderForCreationDto });
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+            var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
+
+            var order = _mapper.Map<Order>(orderForCreationDto);
+            order.OrderItems = _mapper.Map<List<OrderItem>>(orderForCreationDto.Products);
+            order.CreditCard = _mapper.Map<OrderCreditCard>(orderForCreationDto.CreditCard);
+
+            var orderHistoryDto = await _unitOfWork.OrderRepository.AddOrderAsync(order, uid);
+
+            if (!orderHistoryDto.Success)
+                return StatusCode(orderHistoryDto.StatusCode, orderHistoryDto.Message);
+
+            if (await _unitOfWork.Save() < 1)
+                return StatusCode(StatusCodes.Status500InternalServerError);
+
+            return Ok(new 
+            {
+                orderHistoryDto.CreditCardNumber, 
+                orderHistoryDto.Address,
+                orderHistoryDto.Date, orderHistoryDto.ProductsDetails, 
+                orderHistoryDto.TotalPrice
+            });
         }
     }
 }

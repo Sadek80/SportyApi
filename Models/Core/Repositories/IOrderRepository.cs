@@ -9,7 +9,7 @@ namespace SportyApi.Models.Core.Repositories
 {
     public interface IOrderRepository
     {
-        Task<IEnumerable<Order>> GetUserOrdersHistoryAsync(string userId);
-        Task AddOrderAsync(Order order, string userId);
+        Task<List<Order>> GetUserOrdersHistoryAsync(string userId);
+        Task<OrderHistoryDto> AddOrderAsync(Order order, string userId);
     }
 }

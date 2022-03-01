@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SportyApi.Models.Core.Domain;
 using SportyApi.Models.Core.DTOs.UserDtos;
 using SportyApi.Models.Core.Repositories;
+using SportyApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,16 @@ namespace SportyApi.Models.Persistence.Repositories
         private readonly AppDataContext _dataContext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly ICreditCardValidationService _cardValidationService;
 
-        public UserRepository(AppDataContext dataContext, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public UserRepository(AppDataContext dataContext, UserManager<ApplicationUser> userManager,
+                                                          IMapper mapper,
+                                                          ICreditCardValidationService cardValidationService)
         {
             _dataContext = dataContext;
             _userManager = userManager;
             _mapper = mapper;
+            _cardValidationService = cardValidationService;
         }
 
         public async Task<UserForCartDto> GetUserPaymentDataAsync(string userId)
@@ -105,7 +110,7 @@ namespace SportyApi.Models.Persistence.Repositories
                 {
                     foreach (var card in userForUpdate.CreditCard)
                     {
-                        if (!IsCreditCardInfoValid(card.CreditCardNumber, card.ExpirationDate))
+                        if (!_cardValidationService.IsCreditCardInfoValid(card.CreditCardNumber, card.ExpirationDate))
                         {
                             userForProfile.Success = false;
                             userForProfile.Message = "Error Happened While Updating, Try Again Later.";
@@ -174,54 +179,5 @@ namespace SportyApi.Models.Persistence.Repositories
             return userForProfile;
         }
 
-        private bool IsCreditCardInfoValid(string cardNo, string expiryDate)
-        {
-            var monthCheck = new Regex(@"^(0[1-9]|1[0-2])$");
-            var yearCheck = new Regex(@"^20[0-9]{2}$");
-
-            if (!IsValidCreditCardNum(cardNo))
-                return false;
-
-
-            var dateParts = expiryDate.Split('/');           
-            if (!monthCheck.IsMatch(dateParts[0]) || !yearCheck.IsMatch(dateParts[1]))
-                return false;
-
-            var year = int.Parse(dateParts[1]);
-            var month = int.Parse(dateParts[0]);
-
-            var lastDateOfExpiryMonth = DateTime.DaysInMonth(year, month);
-            var cardExpiry = new DateTime(year, month, lastDateOfExpiryMonth, 23, 59, 59);
-
-            return (cardExpiry > DateTime.Now && cardExpiry < DateTime.Now.AddYears(6));
-        }
-
-        private bool IsValidCreditCardNum(string cardNo)
-        {
-            if (cardNo.Length < 15)
-                return false;
-
-            int[] cardInt = new int[cardNo.Length];
-            int sum = 0;
-
-            for (int i = 0; i < cardInt.Length; i++)
-            {
-                cardInt[i] = (int)(cardNo[i] - '0');
-            }
-
-            for (int i = cardInt.Length - 2; i >= 0; i -= 2)
-            {
-                int temp = cardInt[i];
-                temp *= 2;
-
-                if (temp > 9)
-                    temp = temp % 10 + 1;
-
-                cardInt[i] = temp;
-                sum += temp + cardInt[i + 1];
-            }
-
-            return sum % 10 == 0;
-        }
     }
 }

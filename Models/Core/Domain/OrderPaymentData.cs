@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 namespace SportyApi.Models.Core.Domain
 {
     [Owned]
-    public class OrderPaymentData : IHasCreditCard
+    public class OrderCreditCard : IHasCreditCard
     {
-        [Required]
-        public Address OrderAddress{ get; set; }
         [Required]
         [MaxLength(25)]
         public string CreditCardNumber { get; set; }

@@ -10,7 +10,11 @@ namespace SportyApi.Models.Core.DTOs.OrderDto
 {
     public class OrderForCreationDto
     {
-        public Address Address{ get; set; }
+        //public Address Address{ get; set; }
+        //public CreditCardDto CreditCard { get; set; }
+        [Required]
+        public Address Address { get; set; }
+        [Required]
         public CreditCardDto CreditCard { get; set; }
         [Required]
         public double TotalPrice { get; set; }
