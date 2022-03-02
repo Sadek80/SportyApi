@@ -18,10 +18,16 @@ namespace SportyApi.Models.Persistence.Repositories
             _dataContext = dataContext;
             _userManager = userManager;
         }
-        public Task AddUserInterestsAsync(IEnumerable<Guid> SportsGuids, string userId)
+        public async Task AddUserInterestsAsync(IEnumerable<Guid> SportsGuids, string userId)
         {
 
             throw new NotImplementedException();
+
+            //var user = await _userManager.FindByIdAsync(userId);
+
+            //if (user is null)
+            //    return null;
+
             //foreach (var sort in SportsGuids)
             //{
             //    var sport = _dataContext.Sports.Where(s => s.SportId == sort);
