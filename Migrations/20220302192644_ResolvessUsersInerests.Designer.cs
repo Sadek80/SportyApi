@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportyApi.Models;
 
 namespace SportyApi.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20220302192644_ResolvessUsersInerests")]
+    partial class ResolvessUsersInerests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -492,21 +494,6 @@ namespace SportyApi.Migrations
                     b.ToTable("CreditCards");
                 });
 
-            modelBuilder.Entity("SportyApi.Models.Core.Domain.UsersInterests", b =>
-                {
-                    b.Property<Guid>("SportId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("SportId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UsersInterests");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -798,25 +785,6 @@ namespace SportyApi.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SportyApi.Models.Core.Domain.UsersInterests", b =>
-                {
-                    b.HasOne("SportyApi.Models.Core.Domain.Sport", "Sport")
-                        .WithMany()
-                        .HasForeignKey("SportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SportyApi.Models.Core.Domain.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Sport");
                 });
 
             modelBuilder.Entity("SportyApi.Models.Core.Domain.ApplicationUser", b =>

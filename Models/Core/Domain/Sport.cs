@@ -13,7 +13,7 @@ namespace SportyApi.Models.Core.Domain
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-        public List<ApplicationUser> InterestedUsers { get; set; }
+        //public List<ApplicationUser> InterestedUsers { get; set; }
         public List<Level> Levels { get; set; }
         public List<TrainingProgram> TrainingPrograms { get; set; }
         public List<Product> Products { get; set; }

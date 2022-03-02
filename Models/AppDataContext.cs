@@ -24,6 +24,7 @@ namespace SportyApi.Models
         public DbSet<Product> Products{ get; set; }
         public DbSet<TrainingProgram> TrainingPrograms{ get; set; }
         public DbSet<ReservedProgram> ReservedPrograms{ get; set; }
+        public DbSet<UsersInterests> UsersInterests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,6 +35,8 @@ namespace SportyApi.Models
 
             builder.Entity<ReservedProgram>()
                 .HasKey(r => new { r.UserId, r.TrainingProgramId });
+
+            builder.Entity<UsersInterests>().HasKey(u => new { u.SportId, u.UserId });
 
             //Seeding
         }

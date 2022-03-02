@@ -39,6 +39,9 @@ namespace SportyApi.Controllers
         public async Task<IActionResult> AddUserInterests([FromBody] IEnumerable<Guid> SportsIds)
         {
             //throw new NotImplementedException();
+            if (SportsIds.Count() == 0)
+                return BadRequest("Invalid sports");
+
             return Ok(SportsIds.FirstOrDefault());
         }
 

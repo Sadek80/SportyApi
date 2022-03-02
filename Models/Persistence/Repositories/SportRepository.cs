@@ -35,11 +35,15 @@ namespace SportyApi.Models.Persistence.Repositories
             //    if (sport is null)
             //        return null;
 
-            //    var sport = new Sport();
+            //    var usersInterests = new UsersInterests();
 
-            //    sport.
+            //    usersInterests.UserId = userId;
+            //    usersInterests.SportId = sort;
 
-            //    _dataContext.Sports.Add()
+            //    _dataContext.UsersInterests.Add(usersInterests);
+
+
+             
             //}
         }
 
