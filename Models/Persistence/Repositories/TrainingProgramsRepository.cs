@@ -1,4 +1,5 @@
-﻿using SportyApi.Models.Core.Domain;
+﻿using Microsoft.AspNetCore.Identity;
+using SportyApi.Models.Core.Domain;
 using SportyApi.Models.Core.DTOs.TrainingProgramsDtos;
 using SportyApi.Models.Core.Repositories;
 using SportyApi.ResourceParameters;
@@ -12,10 +13,12 @@ namespace SportyApi.Models.Persistence.Repositories
     public class TrainingProgramsRepository : ITrainingProgramsRepository
     {
         private readonly AppDataContext _dataContext;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TrainingProgramsRepository(AppDataContext dataContext)
+        public TrainingProgramsRepository(AppDataContext dataContext, UserManager<ApplicationUser> userManager)
         {
             _dataContext = dataContext;
+            _userManager = userManager;
         }
 
         public Task AddTrainingProgramAsync(TrainingProgram trainingProgram)
