@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SportyApi.Models.Core.Domain;
 using SportyApi.Models.Core.DTOs.TrainingProgramsDtos;
 using SportyApi.Models.Core.Repositories;
@@ -31,9 +32,28 @@ namespace SportyApi.Models.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TrainingProgram>> GetAllTrainingProgramsAsync(BaseResourceParametersForSearchAndFilter parameters)
+        public async Task<IEnumerable<TrainingProgram>> GetAllTrainingProgramsAsync(BaseResourceParametersForSearchAndFilter parameters)
         {
-            throw new NotImplementedException();
+            var trainingPrograms = _dataContext.TrainingPrograms
+                .Include(s => s.Sport)
+                .ThenInclude(l => l.Levels) as IQueryable<TrainingProgram>;
+
+            if (!string.IsNullOrWhiteSpace(parameters.SearchQuery))
+            {
+                var searchQuery = parameters.SearchQuery.Trim();
+
+                trainingPrograms = trainingPrograms.Where(t => t.Name.Contains(searchQuery) ||
+                                               t.Provider.Contains(searchQuery));
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.FilterBy))
+            {
+                var filterBy = parameters.FilterBy.Trim();
+
+                trainingPrograms = trainingPrograms.Where(t => t.Name == filterBy || t.Sport.Name == filterBy);
+            }
+
+            return await trainingPrograms.ToListAsync();
         }
 
         public Task<TrainingProgram> GetTrainingProgramByIdAsync(Guid trainingProgramId)

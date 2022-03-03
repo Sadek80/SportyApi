@@ -29,8 +29,12 @@ namespace SportyApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllPrograms([FromQuery] BaseResourceParametersForSearchAndFilter parameters)
         {
-            //throw new NotImplementedException();
-            return Ok(parameters);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var trainingPrograms = await _unitOfWork.TrainingProgramsRepository.GetAllTrainingProgramsAsync(parameters);
+
+            return Ok(_mapper.Map<IEnumerable<TrainingProgramDto>>(trainingPrograms));
         }
 
         [HttpGet("{programId}")]
