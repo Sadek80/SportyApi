@@ -60,6 +60,7 @@ namespace SportyApi
                 cfg.AddProfile(new OrderProfile());
                 cfg.AddProfile(new ProductProfile(provider));
                 cfg.AddProfile(new TrainingProgramProfile(provider));
+                cfg.AddProfile(new SportProfile());
             }).CreateMapper());
 
             services.AddAuthentication(options =>

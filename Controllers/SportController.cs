@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using SportyApi.Helpers;
 using SportyApi.Models.Core.Domain;
 using Microsoft.AspNetCore.Identity;
+using SportyApi.Models.Core.DTOs.Base_Dtos;
 
 namespace SportyApi.Controllers
 {
@@ -32,11 +33,12 @@ namespace SportyApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllSports()
         {
-            //throw new NotImplementedException();
-            var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
-            var path = HttpContext.Request.GetRootPath();
-            
-            return Ok(new { uid, path });
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var sports = await _unitOfWork.SportRepository.GetAllSportsAsync();
+
+            return Ok(_mapper.Map<List<SportBaseDto>>(sports));
         }
 
         [HttpPost]

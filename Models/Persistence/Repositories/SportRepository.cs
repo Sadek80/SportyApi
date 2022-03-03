@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SportyApi.Models.Core.Domain;
 using SportyApi.Models.Core.Repositories;
 using System;
@@ -44,9 +45,9 @@ namespace SportyApi.Models.Persistence.Repositories
             return "Interests added successfully.";
         }
 
-        public Task<IEnumerable<Sport>> GetAllSportsAsync()
+        public async Task<IEnumerable<Sport>> GetAllSportsAsync()
         {
-            throw new NotImplementedException();
+            return await _dataContext.Sports.ToListAsync();
         }
     }
 }
