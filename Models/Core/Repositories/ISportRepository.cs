@@ -9,6 +9,6 @@ namespace SportyApi.Models.Core.Repositories
     public interface ISportRepository
     {
         Task<IEnumerable<Sport>> GetAllSportsAsync();
-        Task AddUserInterestsAsync(IEnumerable<Guid> SportsGuids, string userId);
+        Task<string> AddUserInterestsAsync(IEnumerable<Guid> SportsGuids, string userId);
     }
 }

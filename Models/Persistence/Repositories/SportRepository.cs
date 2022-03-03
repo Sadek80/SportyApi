@@ -18,20 +18,20 @@ namespace SportyApi.Models.Persistence.Repositories
             _dataContext = dataContext;
             _userManager = userManager;
         }
-        public async Task AddUserInterestsAsync(IEnumerable<Guid> SportsGuids, string userId)
+        public async Task<string> AddUserInterestsAsync(IEnumerable<Guid> SportsGuids, string userId)
         {
 
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user is null)
-                throw new ArgumentNullException(nameof(user));
+                return "Invalid User!";
 
             foreach (var sport in SportsGuids)
             {
-                var sports = _dataContext.Sports.Where(s => s.SportId == sport);
+                var sports = _dataContext.Sports.FirstOrDefault(s => s.SportId == sport);
 
                 if (sports is null)
-                    throw new ArgumentNullException(nameof(sports));
+                    return "Invalid Sport!";
 
                 var usersInterests = new UsersInterests
                 {
@@ -41,6 +41,7 @@ namespace SportyApi.Models.Persistence.Repositories
 
                 _dataContext.UsersInterests.Add(usersInterests);
             }
+            return "Interests added successfully.";
         }
 
         public Task<IEnumerable<Sport>> GetAllSportsAsync()

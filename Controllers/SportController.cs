@@ -42,16 +42,18 @@ namespace SportyApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUserInterests([FromBody] IEnumerable<Guid> SportsIds)
         {
-
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
             if (SportsIds.Count() == 0)
-                return BadRequest("Invalid sports");
+                return BadRequest("Invalid sports!");
 
             var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
 
-            if (uid == null)
-                return BadRequest("Invalid user");
+            var userInterest = await _unitOfWork.SportRepository.AddUserInterestsAsync(SportsIds, uid);
 
-            await _unitOfWork.SportRepository.AddUserInterestsAsync(SportsIds, uid);
+            if (userInterest != "Interests added successfully.")
+                return BadRequest("Invalid ID!");
 
             await _unitOfWork.Save();
 
