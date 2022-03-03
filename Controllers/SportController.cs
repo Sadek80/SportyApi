@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SportyApi.Helpers;
+using SportyApi.Models.Core.Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace SportyApi.Controllers
 {
@@ -17,12 +19,14 @@ namespace SportyApi.Controllers
     public class SportController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
-        public SportController(IUnitOfWork unitOfWork, IMapper mapper)
+        public SportController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -38,11 +42,20 @@ namespace SportyApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUserInterests([FromBody] IEnumerable<Guid> SportsIds)
         {
-            //throw new NotImplementedException();
+
             if (SportsIds.Count() == 0)
                 return BadRequest("Invalid sports");
 
-            return Ok(SportsIds.FirstOrDefault());
+            var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
+
+            if (uid == null)
+                return BadRequest("Invalid user");
+
+            await _unitOfWork.SportRepository.AddUserInterestsAsync(SportsIds, uid);
+
+            await _unitOfWork.Save();
+
+            return Ok(SportsIds);
         }
 
     }
