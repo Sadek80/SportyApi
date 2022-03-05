@@ -14,6 +14,6 @@ namespace SportyApi.Models.Core.Repositories
         Task<TrainingProgram> GetTrainingProgramByIdAsync(Guid trainingProgramId);
         Task<IEnumerable<ReservedProgram>> GeyUserReservedTrainingProgramsAsync(string userId);
         Task AddTrainingProgramAsync(TrainingProgram trainingProgram);
-        Task EnrollToTrainingProgramAsync(string userId, Guid programId);
+        Task<string> EnrollToTrainingProgramAsync(string userId, Guid programId);
     }
 }

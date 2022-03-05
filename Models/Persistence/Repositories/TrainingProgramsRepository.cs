@@ -27,9 +27,28 @@ namespace SportyApi.Models.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task EnrollToTrainingProgramAsync(string userId, Guid programId)
+        public async Task<string> EnrollToTrainingProgramAsync(string userId, Guid programId)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user is null)
+                return "Invalid User!";
+
+            var trainingrogram = _dataContext.ReservedPrograms.Where(t => t.TrainingProgramId == programId);
+
+            if (trainingrogram is null)
+                return "Invalid program!";
+
+            var reservedProgram = new ReservedProgram
+            {
+                UserId = userId,
+                TrainingProgramId = programId,
+                Date = DateTime.Now
+            };
+
+            _dataContext.ReservedPrograms.Add(reservedProgram);
+
+            return "You have successfully enrolled.";
         }
 
         public async Task<IEnumerable<TrainingProgram>> GetAllTrainingProgramsAsync(BaseResourceParametersForSearchAndFilter parameters)
@@ -56,13 +75,35 @@ namespace SportyApi.Models.Persistence.Repositories
             return await trainingPrograms.ToListAsync();
         }
 
-        public Task<TrainingProgram> GetTrainingProgramByIdAsync(Guid trainingProgramId)
+        public async Task<TrainingProgram> GetTrainingProgramByIdAsync(Guid trainingProgramId)
         {
-            throw new NotImplementedException();
+            if (trainingProgramId == Guid.Empty)
+                throw new ArgumentNullException(nameof(trainingProgramId));
+
+            return await _dataContext.TrainingPrograms
+                .Include(t => t.Sport)
+                .ThenInclude(tl => tl.Levels)
+                .FirstOrDefaultAsync(t => t.TrainingProgramId == trainingProgramId);
         }
 
-        public Task<IEnumerable<ReservedProgram>> GeyUserReservedTrainingProgramsAsync(string userId)
+        public async Task<IEnumerable<ReservedProgram>> GeyUserReservedTrainingProgramsAsync(string userId)
         {
+            //var user = await _userManager.FindByIdAsync(userId);
+
+            //if (user is null)
+            //    return null;
+
+            //var programs = await _dataContext.ReservedPrograms.Where(t => t.UserId == userId).ToListAsync();
+
+            //foreach (var program in programs)
+            //{
+            //    program.TrainingProgram = (TrainingProgram)_dataContext.TrainingPrograms
+            //        .Where(t => t.TrainingProgramId == program.TrainingProgramId)
+            //        .Include(ts => ts.Sport)
+            //        .ThenInclude(tl => tl.Levels);
+            //}
+
+            //return programs; 
             throw new NotImplementedException();
         }
     }

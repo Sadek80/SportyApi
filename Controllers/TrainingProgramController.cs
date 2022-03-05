@@ -40,8 +40,15 @@ namespace SportyApi.Controllers
         [HttpGet("{programId}")]
         public async Task<IActionResult> GetProgramById(Guid programId)
         {
-            //throw new NotImplementedException();
-            return Ok(programId);
+            if (programId == Guid.Empty)
+                return BadRequest("Invalid Program!");
+            
+            var trainingProgram = await _unitOfWork.TrainingProgramsRepository.GetTrainingProgramByIdAsync(programId);
+
+            if (trainingProgram is null)
+                return NotFound("Program not found!");
+
+            return Ok(_mapper.Map<TrainingProgramFullDto>(trainingProgram));
         }
 
         [HttpPost]
@@ -54,17 +61,43 @@ namespace SportyApi.Controllers
         [HttpGet("history")]
         public async Task<IActionResult> GeyUserReservedTrainingPrograms()
         {
-            //throw new NotImplementedException();
             var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
-            return Ok(new { uid });
+            return Ok();
+
+            ////var uid = "205e3dbf-d4fa-4c61-bca5-e268883fec6a";
+
+            //var programs = await _unitOfWork.TrainingProgramsRepository.GeyUserReservedTrainingProgramsAsync(uid);
+
+            //if (programs is null)
+            //    return BadRequest("Invalid User");
+
+            //if (programs.Count() == 0)
+            //    return BadRequest("There's no programs yet!");
+
+
+            //return Ok(_mapper.Map<List<TrainingProgramHistoryDto>>(programs));
+
         }
 
         [HttpPost("{programId}/enroll")]
         public async Task<IActionResult> EnrollToProgram(Guid programId)
         {
-            //throw new NotImplementedException();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (programId == Guid.Empty)
+                return BadRequest("Invalid program!");
+
             var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
-            return Ok(new { id = uid, Pid = programId });
+
+            var reservedProgram = await _unitOfWork.TrainingProgramsRepository.EnrollToTrainingProgramAsync(uid, programId);
+
+            if (reservedProgram != "You have successfully enrolled.")
+                return BadRequest("Invalid ID!");
+
+            await _unitOfWork.Save();
+
+            return Ok(programId);
         }
 
     }
