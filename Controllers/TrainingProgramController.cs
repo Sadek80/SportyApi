@@ -61,21 +61,22 @@ namespace SportyApi.Controllers
         [HttpGet("history")]
         public async Task<IActionResult> GeyUserReservedTrainingPrograms()
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
-            return Ok();
 
-            ////var uid = "205e3dbf-d4fa-4c61-bca5-e268883fec6a";
+            var programs = await _unitOfWork.TrainingProgramsRepository.GeyUserReservedTrainingProgramsAsync(uid);
 
-            //var programs = await _unitOfWork.TrainingProgramsRepository.GeyUserReservedTrainingProgramsAsync(uid);
+            if (programs is null)
+                return BadRequest("Invalid User!");
 
-            //if (programs is null)
-            //    return BadRequest("Invalid User");
+            if (programs.Count() == 0)
+                return BadRequest("There's no programs yet!");
 
-            //if (programs.Count() == 0)
-            //    return BadRequest("There's no programs yet!");
+            var history = _mapper.Map<List<TrainingProgramHistoryDto>>(programs);
 
-
-            //return Ok(_mapper.Map<List<TrainingProgramHistoryDto>>(programs));
+            return Ok(history);
 
         }
 

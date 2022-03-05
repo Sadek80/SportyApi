@@ -43,7 +43,7 @@ namespace SportyApi.Models.Persistence.Repositories
             {
                 UserId = userId,
                 TrainingProgramId = programId,
-                Date = DateTime.Now
+                Date = DateTimeOffset.UtcNow
             };
 
             _dataContext.ReservedPrograms.Add(reservedProgram);
@@ -88,23 +88,23 @@ namespace SportyApi.Models.Persistence.Repositories
 
         public async Task<IEnumerable<ReservedProgram>> GeyUserReservedTrainingProgramsAsync(string userId)
         {
-            //var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
 
-            //if (user is null)
-            //    return null;
+            if (user is null)
+                return null;
 
-            //var programs = await _dataContext.ReservedPrograms.Where(t => t.UserId == userId).ToListAsync();
+            var programs = await _dataContext.ReservedPrograms.Where(t => t.UserId == userId).ToListAsync();
 
-            //foreach (var program in programs)
-            //{
-            //    program.TrainingProgram = (TrainingProgram)_dataContext.TrainingPrograms
-            //        .Where(t => t.TrainingProgramId == program.TrainingProgramId)
-            //        .Include(ts => ts.Sport)
-            //        .ThenInclude(tl => tl.Levels);
-            //}
+            foreach (var program in programs)
+            {
+                program.TrainingProgram = (TrainingProgram)_dataContext.TrainingPrograms
+                    .Where(t => t.TrainingProgramId == program.TrainingProgramId)
+                    .Include(ts => ts.Sport)
+                    .ThenInclude(tl => tl.Levels)
+                    .SingleOrDefault();
+            }
 
-            //return programs; 
-            throw new NotImplementedException();
+            return programs;
         }
     }
 }

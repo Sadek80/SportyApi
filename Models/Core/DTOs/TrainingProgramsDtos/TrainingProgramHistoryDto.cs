@@ -9,7 +9,7 @@ namespace SportyApi.Models.Core.DTOs.TrainingProgramsDtos
     public class TrainingProgramHistoryDto : TrainingProgramBaseDto
     {
         public string DescriptionMinimized { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public string Date { get; set; }
         public string SportName { get; set; }
 
     }
