@@ -32,7 +32,11 @@ namespace SportyApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var trainingPrograms = await _unitOfWork.TrainingProgramsRepository.GetAllTrainingProgramsAsync(parameters);
+            var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
+
+
+            var trainingPrograms = await _unitOfWork.TrainingProgramsRepository
+                                                                    .GetAllTrainingProgramsAsync(parameters, uid);
 
             return Ok(_mapper.Map<IEnumerable<TrainingProgramDto>>(trainingPrograms));
         }

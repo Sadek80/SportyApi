@@ -49,19 +49,13 @@ namespace SportyApi.Models.Persistence.Repositories
                 products = products.Where(p => p.Sport.Name == filterBy);
             }
 
-            //var productList = await products.OrderBy(p => userInterests.IndexOf(p.SportId)).ToListAsync();
-
             List<Product> productList;
+            productList = await products.ToListAsync();
+
 
             if (userInterests.Count != 0)
-            {
-                productList = await products.OrderBy(p => p.SportId).ToListAsync();
                 productList = productList.OrderByDescending(p => userInterests.IndexOf(p.SportId)).ToList();
-            }
-            else
-            {
-                productList = await products.ToListAsync();
-            }
+            
 
             return productList;
         }

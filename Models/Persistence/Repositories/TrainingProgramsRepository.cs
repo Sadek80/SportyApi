@@ -61,8 +61,12 @@ namespace SportyApi.Models.Persistence.Repositories
             return "You have successfully enrolled.";
         }
 
-        public async Task<IEnumerable<TrainingProgram>> GetAllTrainingProgramsAsync(BaseResourceParametersForSearchAndFilter parameters)
+        public async Task<IEnumerable<TrainingProgram>> GetAllTrainingProgramsAsync
+            (BaseResourceParametersForSearchAndFilter parameters, string userId)
         {
+            var userInterests = await _dataContext.UsersInterests
+                                                               .Where(ui => ui.UserId == userId)
+                                                               .Select(u => u.SportId).ToListAsync();
             var trainingPrograms = _dataContext.TrainingPrograms
                 .Include(s => s.Sport)
                 .ThenInclude(l => l.Levels) as IQueryable<TrainingProgram>;
@@ -82,6 +86,13 @@ namespace SportyApi.Models.Persistence.Repositories
 
                 trainingPrograms = trainingPrograms.Where(t => t.Sport.Name == filterBy);
             }
+
+            List<TrainingProgram> programsList;
+            programsList = await trainingPrograms.ToListAsync();
+
+
+            if (userInterests.Count != 0)
+                programsList = programsList.OrderByDescending(p => userInterests.IndexOf(p.SportId)).ToList();
 
             return await trainingPrograms.ToListAsync();
         }
