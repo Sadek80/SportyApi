@@ -38,7 +38,9 @@ namespace SportyApi.Controllers
             var trainingPrograms = await _unitOfWork.TrainingProgramsRepository
                                                                     .GetAllTrainingProgramsAsync(parameters, uid);
 
-            return Ok(_mapper.Map<IEnumerable<TrainingProgramDto>>(trainingPrograms));
+            var result = _mapper.Map<IEnumerable<TrainingProgramDto>>(trainingPrograms);
+
+            return Ok(result);
         }
 
         [HttpGet("{programId}")]

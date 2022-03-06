@@ -39,6 +39,26 @@ namespace SportyApi.Models
             builder.Entity<UsersInterests>().HasKey(u => new { u.SportId, u.UserId });
 
             //Seeding
+
+            builder.Entity<TrainingProgram>().HasData(new TrainingProgram
+            {
+                TrainingProgramId = Guid.NewGuid(),
+                SportId = new Guid("2eb7d589-7dc9-453f-9a8d-00f53ef9449b"),
+                Name = "Mass Building Hypertrophy Workout",
+                Provider = "Gold's Gym",
+                DescriptionMinimized = "This program will help intermediate trainees gain size and " +
+                "strength. Rest-pause set, drop sets, and negatives will kick your muscle gains into high gear!",
+                Description = "That would be the best split, but let’s face facts. There are a lot of you that have" +
+                " jobs that don’t allow this to happen, so here’s what you need to know. " +
+                "The only rule I suggest you follow is that you don’t train for more than three days in a row before " +
+                "taking a day off. Two would be best, but if you must train a third consecutive day, " +
+                "go for it. I don’t suggest you do this normally. For more info, please Enroll and we " +
+                "will contact you",
+                ImageUrl = "Programs/Gym/MassBuildingHypertrophyWorKout.PNG",
+                LevelId = new Guid("0dfe7a76-f899-4b8c-aa86-495c70ff3959"),
+                Location = "Gold's Gym - Elite San Stefano",
+                PricePerMonth = 3000,
+            });
         }
     }
 }

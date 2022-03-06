@@ -94,7 +94,7 @@ namespace SportyApi.Models.Persistence.Repositories
             if (userInterests.Count != 0)
                 programsList = programsList.OrderByDescending(p => userInterests.IndexOf(p.SportId)).ToList();
 
-            return await trainingPrograms.ToListAsync();
+            return programsList;
         }
 
         public async Task<TrainingProgramFullDto> GetTrainingProgramByIdAsync(Guid trainingProgramId, string userId)
