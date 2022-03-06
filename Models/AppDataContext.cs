@@ -14,8 +14,6 @@ namespace SportyApi.Models
         {
         }
 
-        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-        public DbSet<ShoppingCartItem> ShppingCartItems { get; set; }
         public DbSet<Sport> Sports { get; set; }
         public DbSet<Level> Levels{ get; set; }
         public DbSet<Order> Orders { get; set; }
