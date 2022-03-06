@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SportyApi.Models.Core.Domain;
 using SportyApi.Models.Core.DTOs.TrainingProgramsDtos;
@@ -15,11 +16,14 @@ namespace SportyApi.Models.Persistence.Repositories
     {
         private readonly AppDataContext _dataContext;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public TrainingProgramsRepository(AppDataContext dataContext, UserManager<ApplicationUser> userManager)
+        public TrainingProgramsRepository(AppDataContext dataContext,
+            UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _dataContext = dataContext;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public Task AddTrainingProgramAsync(TrainingProgram trainingProgram)
@@ -34,10 +38,16 @@ namespace SportyApi.Models.Persistence.Repositories
             if (user is null)
                 return "Invalid User!";
 
-            var trainingrogram = _dataContext.ReservedPrograms.Where(t => t.TrainingProgramId == programId);
+            var trainingrogram = _dataContext.TrainingPrograms.FirstOrDefault(t => t.TrainingProgramId == programId);
 
             if (trainingrogram is null)
                 return "Invalid program!";
+
+            var alreadyReserved = _dataContext.ReservedPrograms.Where(r => r.UserId == userId)
+                                                               .FirstOrDefault(ur => ur.TrainingProgramId == programId);
+
+            if (alreadyReserved is not null)
+                return "Already Enrolled!";
 
             var reservedProgram = new ReservedProgram
             {
@@ -62,28 +72,37 @@ namespace SportyApi.Models.Persistence.Repositories
                 var searchQuery = parameters.SearchQuery.Trim();
 
                 trainingPrograms = trainingPrograms.Where(t => t.Name.Contains(searchQuery) ||
-                                               t.Provider.Contains(searchQuery));
+                                               t.Provider.Contains(searchQuery)
+                                               || t.Sport.Name.Contains(searchQuery));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.FilterBy))
             {
                 var filterBy = parameters.FilterBy.Trim();
 
-                trainingPrograms = trainingPrograms.Where(t => t.Name == filterBy || t.Sport.Name == filterBy);
+                trainingPrograms = trainingPrograms.Where(t => t.Sport.Name == filterBy);
             }
 
             return await trainingPrograms.ToListAsync();
         }
 
-        public async Task<TrainingProgram> GetTrainingProgramByIdAsync(Guid trainingProgramId)
+        public async Task<TrainingProgramFullDto> GetTrainingProgramByIdAsync(Guid trainingProgramId, string userId)
         {
-            if (trainingProgramId == Guid.Empty)
-                throw new ArgumentNullException(nameof(trainingProgramId));
 
-            return await _dataContext.TrainingPrograms
+            var trainingProgram = await _dataContext.TrainingPrograms
                 .Include(t => t.Sport)
                 .ThenInclude(tl => tl.Levels)
                 .FirstOrDefaultAsync(t => t.TrainingProgramId == trainingProgramId);
+
+            var programFullDto = _mapper.Map<TrainingProgramFullDto>(trainingProgram);
+
+            var alreadyReserved = await _dataContext.ReservedPrograms.Where(r => r.UserId == userId)
+               .FirstOrDefaultAsync(ur => ur.TrainingProgramId == trainingProgramId);
+
+            if (alreadyReserved is not null)
+                programFullDto.IsReserved = true;
+
+            return programFullDto;
         }
 
         public async Task<IEnumerable<ReservedProgram>> GeyUserReservedTrainingProgramsAsync(string userId)

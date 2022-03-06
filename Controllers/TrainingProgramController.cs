@@ -42,13 +42,17 @@ namespace SportyApi.Controllers
         {
             if (programId == Guid.Empty)
                 return BadRequest("Invalid Program!");
-            
-            var trainingProgram = await _unitOfWork.TrainingProgramsRepository.GetTrainingProgramByIdAsync(programId);
+
+            var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
+
+
+            var trainingProgram = await _unitOfWork.TrainingProgramsRepository
+                .GetTrainingProgramByIdAsync(programId, uid);
 
             if (trainingProgram is null)
                 return NotFound("Program not found!");
 
-            return Ok(_mapper.Map<TrainingProgramFullDto>(trainingProgram));
+            return Ok(trainingProgram);
         }
 
         [HttpPost]
@@ -94,7 +98,7 @@ namespace SportyApi.Controllers
             var reservedProgram = await _unitOfWork.TrainingProgramsRepository.EnrollToTrainingProgramAsync(uid, programId);
 
             if (reservedProgram != "You have successfully enrolled.")
-                return BadRequest("Invalid ID!");
+                return BadRequest(reservedProgram);
 
             await _unitOfWork.Save();
 

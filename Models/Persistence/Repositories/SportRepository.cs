@@ -30,6 +30,11 @@ namespace SportyApi.Models.Persistence.Repositories
             foreach (var sport in SportsGuids)
             {
                 var sports = _dataContext.Sports.FirstOrDefault(s => s.SportId == sport);
+                var alreadyInterested = _dataContext.UsersInterests.Where(u => u.UserId == userId)
+                                                                   .FirstOrDefault(s => s.SportId == sport);
+
+                if (alreadyInterested is not null)
+                    return "There's a sport already in the user interest list";
 
                 if (sports is null)
                     return "Invalid Sport!";

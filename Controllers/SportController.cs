@@ -55,7 +55,7 @@ namespace SportyApi.Controllers
             var userInterest = await _unitOfWork.SportRepository.AddUserInterestsAsync(SportsIds, uid);
 
             if (userInterest != "Interests added successfully.")
-                return BadRequest("Invalid ID!");
+                return BadRequest(userInterest);
 
             await _unitOfWork.Save();
 
