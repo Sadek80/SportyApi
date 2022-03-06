@@ -29,10 +29,12 @@ namespace SportyApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts([FromQuery] BaseResourceParametersForSearchAndFilter parameters)
         {
+            var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
+            
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var products = await _unitOfWork.ProductRepository.GetAllProductsAsync(parameters);
+            var products = await _unitOfWork.ProductRepository.GetAllProductsAsync(parameters, uid);
 
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }

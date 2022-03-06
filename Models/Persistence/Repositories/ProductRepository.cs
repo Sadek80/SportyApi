@@ -25,8 +25,12 @@ namespace SportyApi.Models.Persistence.Repositories
             await _dataContext.AddAsync(product);
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync(BaseResourceParametersForSearchAndFilter parameters)
+        public async Task<IEnumerable<Product>> GetAllProductsAsync(BaseResourceParametersForSearchAndFilter parameters,
+            string userId)
         {
+            var userInterests = await _dataContext.UsersInterests
+                                                                .Where(ui => ui.UserId == userId)
+                                                                .Select(u => u.SportId).ToListAsync();
             var products = _dataContext.Products.Include(p => p.Sport) as IQueryable<Product>;
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchQuery))
@@ -45,7 +49,21 @@ namespace SportyApi.Models.Persistence.Repositories
                 products = products.Where(p => p.Sport.Name == filterBy);
             }
 
-            return await products.ToListAsync();
+            //var productList = await products.OrderBy(p => userInterests.IndexOf(p.SportId)).ToListAsync();
+
+            List<Product> productList;
+
+            if (userInterests.Count != 0)
+            {
+                productList = await products.OrderBy(p => p.SportId).ToListAsync();
+                productList = productList.OrderByDescending(p => userInterests.IndexOf(p.SportId)).ToList();
+            }
+            else
+            {
+                productList = await products.ToListAsync();
+            }
+
+            return productList;
         }
 
         public async Task<Product> GetProductByIdAsync(Guid productId)
