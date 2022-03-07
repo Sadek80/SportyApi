@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportyApi.Models;
 
 namespace SportyApi.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20220307171156_SeedsSomeFootballLevels")]
+    partial class SeedsSomeFootballLevels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,6 +243,26 @@ namespace SportyApi.Migrations
                     b.HasIndex("SportId");
 
                     b.ToTable("Levels");
+
+                    b.HasData(
+                        new
+                        {
+                            LevelId = new Guid("eadd920f-74e3-4402-af5d-a5416f989a57"),
+                            Description = "Players Born In 2010-2016",
+                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
+                        },
+                        new
+                        {
+                            LevelId = new Guid("07a478ef-58fb-4875-8ae8-b060f0632814"),
+                            Description = "Players Born In 2005-2009",
+                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
+                        },
+                        new
+                        {
+                            LevelId = new Guid("9d9d2a15-d46e-406b-9c27-11c5a1dc31ca"),
+                            Description = "For Professional Players",
+                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
+                        });
                 });
 
             modelBuilder.Entity("SportyApi.Models.Core.Domain.Order", b =>
@@ -414,47 +436,6 @@ namespace SportyApi.Migrations
                     b.HasIndex("SportId");
 
                     b.ToTable("TrainingPrograms");
-
-                    b.HasData(
-                        new
-                        {
-                            TrainingProgramId = new Guid("6752eccc-d87f-467b-a15b-8916fc68954c"),
-                            Description = "l Ahly Soccer Training Academy is committed to youth player development and success. Our Academy focuses on individual foot skills, ball mastery, proper technique, tactical understanding of the game, as well as speed agility quickness(SAQ) training. To build talented and confident, players through proven training methods.Licensed professional coaches are committed to the overall growth of individuals and teams, while maintaining a fun and safe learning environment.",
-                            DescriptionMinimized = "A successful soccer career begins with a strong training foundation.",
-                            ImageUrl = "Programs/Football/Al-Ahliclubacademy(2010-2016).png",
-                            LevelId = new Guid("eadd920f-74e3-4402-af5d-a5416f989a57"),
-                            Location = "Al-Ahly, Nasr City, Cairo",
-                            Name = "Al-Ahly Football Academy (2010-2016)",
-                            PricePerMonth = 1500.0,
-                            Provider = "Al-Ahly SC",
-                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
-                        },
-                        new
-                        {
-                            TrainingProgramId = new Guid("46e1d573-01c5-4988-85dd-d70c579b05d4"),
-                            Description = "l Ahly Soccer Training Academy is committed to youth player development and success. Our Academy focuses on individual foot skills, ball mastery, proper technique, tactical understanding of the game, as well as speed agility quickness(SAQ) training. To build talented and confident, players through proven training methods.Licensed professional coaches are committed to the overall growth of individuals and teams, while maintaining a fun and safe learning environment.",
-                            DescriptionMinimized = "A successful soccer career begins with a strong training foundation.",
-                            ImageUrl = "Programs/Football/Al-Ahliclubacademy(2005-2009).png",
-                            LevelId = new Guid("07a478ef-58fb-4875-8ae8-b060f0632814"),
-                            Location = "Al-Ahly, Nasr City, Cairo",
-                            Name = "Al-Ahly Football Academy (2005-2009)",
-                            PricePerMonth = 3000.0,
-                            Provider = "Al-Ahly SC",
-                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
-                        },
-                        new
-                        {
-                            TrainingProgramId = new Guid("736683bc-fdf4-47a6-b099-0d2a8778b0c8"),
-                            Description = "Ensures the professional soccer player receives the most relevant technical, tactical, and physiological information in order to successfully identify in-play weaknesses & subsequently improve upon these in competitive games",
-                            DescriptionMinimized = "Performance analysis consist on tactical assessment, movement analysis, video and statistical databasing and modeling and coach and player data presentations.",
-                            ImageUrl = "Programs/Football/performanceanalystfootball.jpg",
-                            LevelId = new Guid("9d9d2a15-d46e-406b-9c27-11c5a1dc31ca"),
-                            Location = "El Omraniya, Giza",
-                            Name = "Football Performance Analysis",
-                            PricePerMonth = 5000.0,
-                            Provider = "Mohamed Abdel Fattah",
-                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
-                        });
                 });
 
             modelBuilder.Entity("SportyApi.Models.Core.Domain.UserCreditCard", b =>
