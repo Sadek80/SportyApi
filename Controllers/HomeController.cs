@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportyApi.Models;
 using SportyApi.Models.Core;
+using SportyApi.Models.Core.Domain;
 using SportyApi.Models.Core.DTOs.HomeDtos;
 using SportyApi.Models.Core.DTOs.ProductDtos;
 using SportyApi.Models.Core.DTOs.TrainingProgramsDtos;
@@ -30,9 +31,30 @@ namespace SportyApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetHomeData()
         {
-            var programs = await _dataContext.TrainingPrograms.Take(5)
-                .Include(t => t.Sport).Include(t => t.Level).ToListAsync();
-            var products = await _dataContext.Products.Take(5).Include(t => t.Sport).ToListAsync();
+            var uid = User.Claims.FirstOrDefault(u => u.Type == "uid").Value;
+
+            var userInterests = _dataContext.UsersInterests.Where(ui => ui.UserId == uid).Select(ui => ui.SportId);
+
+            List<TrainingProgram> programs;
+            List<Product> products;
+
+            if (userInterests.Count() != 0)
+            {
+                 programs = await _dataContext.TrainingPrograms.Where(p => userInterests.Contains(p.SportId)).Take(5)
+                    .Include(t => t.Sport).Include(t => t.Level).OrderBy(p => p.Name).ToListAsync();
+
+                products = await _dataContext.Products.Where(p => userInterests.Contains(p.SportId)).Take(5)
+                    .Include(t => t.Sport).OrderBy(p => p.Name).ToListAsync();
+            }
+            else
+            {
+                programs = await _dataContext.TrainingPrograms.Take(5)
+                   .Include(t => t.Sport).Include(t => t.Level).OrderBy(p => p.Name).ToListAsync();
+
+                products = await _dataContext.Products.Take(5)
+                    .Include(t => t.Sport).OrderBy(p => p.Name).ToListAsync();
+            }
+            
 
             HomeDto homeDto = new HomeDto();
 
