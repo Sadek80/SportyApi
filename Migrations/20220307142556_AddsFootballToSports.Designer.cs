@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportyApi.Models;
 
 namespace SportyApi.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20220307142556_AddsFootballToSports")]
+    partial class AddsFootballToSports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -329,80 +331,6 @@ namespace SportyApi.Migrations
                     b.HasIndex("SportId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = new Guid("70431068-33cf-4e6e-b49b-499e553d34c1"),
-                            Brand = "adidas",
-                            Description = "Now with 360° coverage of DEMONSKIN rubber spikes, deliberately positioned to align with key ball - contact points, enabling superior control and increased ball swerve.Informed by elite player feedback, adidas updated the Predator design by creating an enhanced fit and extending the coverage of Demonskin rubber spikes for extraordinary ball control.",
-                            DescriptionMinimized = "A CONTROL FREAK - the new adidas Predator Freak is the most aggressive - looking cleat in the game.",
-                            ImageUrl = "Products/Football/AdidasPredatorFreakSoccerCleat.jpg",
-                            Name = "Predator Freak + FG Firm Ground Soccer Cleat",
-                            Price = 234.99000000000001,
-                            Quantity = 150,
-                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("277d46c2-8f29-491d-aa39-81df68968553"),
-                            Brand = "adidas",
-                            Description = "adidas Predator gloves turn any goalkeeper into a shot-stopping beast! Play with the confidence that you're competing in a superior set of gloves from a great soccer brand.Can be worn for both match and training, on all surfaces,in all conditions.",
-                            DescriptionMinimized = "adidas Predator gloves turn any goalkeeper into a shot - stopping beast.",
-                            ImageUrl = "Products/Football/adidasPredatorGoalKeeperGloves.jpg",
-                            Name = "Predator Pro Ultimate Goalkeeper Gloves",
-                            Price = 179.99000000000001,
-                            Quantity = 150,
-                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("ec043374-747d-4188-9f15-0c41a65258a9"),
-                            Brand = "adidas",
-                            Description = "The Pro is the official on-field match ball for the 2022 Champions League finale.UCL details, Textured surface, Thermally bonded seamless construction, 100 % Polyurethane, Butyl bladder, and Meets FIFA Quality Pro Standards.",
-                            DescriptionMinimized = " The Pro is the official on-field match ball for the 2022 Champions League finale.",
-                            ImageUrl = "Products/Football/adidasUCLChampionsLeagueBall.jpg",
-                            Name = "UCL Champions League Pro Soccer Ball",
-                            Price = 164.99000000000001,
-                            Quantity = 150,
-                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("e43f48a9-3928-4035-9960-b25e011fa984"),
-                            Brand = "adidas",
-                            Description = "rawing inspiration from past speed boots, the X 19.1 perfectly blends innovation and technology with the look of pure speed. Some of the fastest players around the world are lacing up in the adidas X, so why aren't you ? A redesigned SpeedMesh upper offers a softer feel around your foot, and a more plush feel on the ball.The upper stays lightweight, offering a second skin - like fit.",
-                            DescriptionMinimized = "The X 19.1 is the perfect boot for players looking to show off their speed.",
-                            ImageUrl = "Products/Football/adidasX19.1FGSoccerCleats.jpg",
-                            Name = "X 19.1 FG Soccer Cleats",
-                            Price = 139.99000000000001,
-                            Quantity = 150,
-                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("833dc10f-63a0-4d18-a919-f6f387dbbbdd"),
-                            Brand = "Nike",
-                            Description = "Full zip training jacket. Ribbed collar, cuffs and waist, Mesh insert, Embroidered swoosh, Dri - FIT technology wicks sweat, and 100 % polyester.",
-                            DescriptionMinimized = "Nike Academy 21 Jacket",
-                            ImageUrl = "Products/Football/NikeAcademyJacket.jpg",
-                            Name = "Academy 21 Jacket",
-                            Price = 59.990000000000002,
-                            Quantity = 150,
-                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("ed310637-8a9b-4bdb-ae60-ae10383fad1f"),
-                            Brand = "SKLZ",
-                            Description = " A shoot and finish trainer that fits regulation size goals. It gives strikers open zones where they statistically are four times more likely to score a goal.Easily attaches to any regulation goal.",
-                            DescriptionMinimized = "A shoot and finish trainer that fits regulation size goals",
-                            ImageUrl = "Products/Football/SKLZGoalshot.jpg",
-                            Name = "SKLZ Goalshot",
-                            Price = 299.99000000000001,
-                            Quantity = 150,
-                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed")
-                        });
                 });
 
             modelBuilder.Entity("SportyApi.Models.Core.Domain.ReservedProgram", b =>
@@ -437,6 +365,13 @@ namespace SportyApi.Migrations
                     b.HasKey("SportId");
 
                     b.ToTable("Sports");
+
+                    b.HasData(
+                        new
+                        {
+                            SportId = new Guid("a2bfd329-eba3-4520-9184-8877cffd1aed"),
+                            Name = "Football"
+                        });
                 });
 
             modelBuilder.Entity("SportyApi.Models.Core.Domain.TrainingProgram", b =>
