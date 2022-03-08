@@ -99,9 +99,27 @@ namespace SportyApi.Models.Persistence.Repositories
 
             user.FirstName = userForUpdate.FirstName;
             user.LastName = userForUpdate.LastName;
-            user.Email = userForUpdate.Email;
 
-            if(userForUpdate.Address is not null)
+            if(user.Email == userForUpdate.Email)
+            {
+                user.Email = userForUpdate.Email;
+            }
+            else
+            {
+                var isExistedEmail = await _userManager.FindByEmailAsync(userForUpdate.Email);
+
+                if(isExistedEmail is not null)
+                {
+                    userForProfile.Success = false;
+                    userForProfile.Message = "Invalid Email";
+                    userForProfile.StatusCode = StatusCodes.Status400BadRequest;
+                    return userForProfile;
+                }
+                user.Email = userForUpdate.Email;
+            }
+
+
+            if (userForUpdate.Address is not null)
                 user.Address = userForUpdate.Address;
 
             if (userForUpdate.CreditCard is not null)
