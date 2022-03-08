@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportyApi.Models;
 
 namespace SportyApi.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20220308182903_AddsProgramToTennis")]
+    partial class AddsProgramToTennis
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,6 +243,14 @@ namespace SportyApi.Migrations
                     b.HasIndex("SportId");
 
                     b.ToTable("Levels");
+
+                    b.HasData(
+                        new
+                        {
+                            LevelId = new Guid("c8a2734e-d7f5-431e-b77b-a4b35b6a7f3a"),
+                            Description = "All Levles",
+                            SportId = new Guid("246b70f0-2df6-4d0c-8ca1-8a431b544ecb")
+                        });
                 });
 
             modelBuilder.Entity("SportyApi.Models.Core.Domain.Order", b =>
@@ -414,21 +424,6 @@ namespace SportyApi.Migrations
                     b.HasIndex("SportId");
 
                     b.ToTable("TrainingPrograms");
-
-                    b.HasData(
-                        new
-                        {
-                            TrainingProgramId = new Guid("333ffd40-d4be-4da8-be7c-bc6ba7e78db0"),
-                            Description = "Stars Tennis Academy is the practicing grounds for Egypt's top tennis players.Our goal is to inspire and develop a new generation of players that will compete with the world's elite within the coming 10 years. By combining tennis, fitness and mental instructions from sports science in a safe and caring environment. We offer the ideal training for players from beginners to top touring professionals to reach their full potential",
-                            DescriptionMinimized = "At Stars Academy, we train tennis professionals, we train athletes, and we train individuals.",
-                            ImageUrl = "Programs/Tennis/StarsTennisAcademy.jpg",
-                            LevelId = new Guid("c8a2734e-d7f5-431e-b77b-a4b35b6a7f3a"),
-                            Location = "Smouha Club - Alexandria",
-                            Name = "Stars Tennis Academy",
-                            PricePerMonth = 1000.0,
-                            Provider = "Stars Tennis Academy",
-                            SportId = new Guid("246b70f0-2df6-4d0c-8ca1-8a431b544ecb")
-                        });
                 });
 
             modelBuilder.Entity("SportyApi.Models.Core.Domain.UserCreditCard", b =>
