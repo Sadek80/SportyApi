@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportyApi.Models;
 
 namespace SportyApi.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20220308110046_AddsTennisToSport")]
+    partial class AddsTennisToSport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -329,56 +331,6 @@ namespace SportyApi.Migrations
                     b.HasIndex("SportId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = new Guid("8f0afcf5-88d3-4679-9a66-ec3462b5f00b"),
-                            Brand = "Dunlop",
-                            Description = "DUNLOP AUSTRALIAN OPEN TENNIS BALL: The official ball of the AO, Australian Open, usable on all tournament events including finals, the Dunlop Australian Open tennis balls are designed for competitive, tournament level of play, and to suit the style of tennis presented by the world-class players participating in the most prestigious tourneys in tennis.",
-                            DescriptionMinimized = "The first Slam of the year, the 2019 Australian Open, opens with Dunlop as its new ball sponsor!",
-                            ImageUrl = "Products/Tennis/AustralianOpen4BallTube.JPG",
-                            Name = "Australian Open 4 Ball Tube.",
-                            Price = 870.0,
-                            Quantity = 150,
-                            SportId = new Guid("246b70f0-2df6-4d0c-8ca1-8a431b544ecb")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("23be7e57-5950-44a6-a2ee-74b1a0dd689b"),
-                            Brand = "Wilson",
-                            Description = "Co-designed by Roger Federer, the Pro Staff delivers the pure, classic feel players have come to love but with an all-new uncontaminated design. Meticulous in detail and bold in its beauty, the new Pro Staff introduces a whole new dimension of engineered paint finishes and textures with matte black velvet, chrome touches, and laser engraving never before seen in tennis.",
-                            DescriptionMinimized = "Cross Section: 23mm Flat Beam, String Pattern:18x16, Unstrung weight: 290g, Unstrung Balance: 32.5 CM / 6 Pts HL, Head Size: 104 sq. in.",
-                            ImageUrl = "Products/Tennis/WilsonBlade104WRT73331UTennisRacket.JPG",
-                            Name = "Wilson Blade 104 WRT73331U Tennis Racket",
-                            Price = 3500.0,
-                            Quantity = 5,
-                            SportId = new Guid("246b70f0-2df6-4d0c-8ca1-8a431b544ecb")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("6335ed1f-fc72-48f8-a8ee-69b407cb96a6"),
-                            Brand = "Head",
-                            Description = "There´s no need to compromise with the RADICAL 12R MONSTERCOMBI, which combines all the space you need with all the innovations you desire. Refreshed with a new colorway to match HEAD´s new RADICAL racquet series, the bag has three spacious main compartments that allow you to take whatever you need onto court, while the integrated shoe compartment lets you keep those dirty shoes or laundry locked away if you need to. Two big external accessory pockets ensure your belongings are right where you need them to be. And on the technology side, it comes with the climate control technology CCT+ which protects your racquets from extreme temperatures.",
-                            DescriptionMinimized = "The RADICAL bag series puts an end to compromise and the RADICAL 12R MONSTERCOMBI is the best proof as it combines all the room you need with all of the innovations you desire.",
-                            ImageUrl = "Products/Tennis/HeadRadicalMonstercombiRacketBag.JPG",
-                            Name = "Head Radical Monstercombi Racket Bag",
-                            Price = 1122.0,
-                            Quantity = 150,
-                            SportId = new Guid("246b70f0-2df6-4d0c-8ca1-8a431b544ecb")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("ce84c3c5-90ff-4255-a711-6a0cd9a271d1"),
-                            Brand = "Head",
-                            Description = "Asymmetrical Waistband, Waist with elastic cord, Elastic waist, Printed logo, High-quality glued stitching, Integrated shorts, Pleats (fold-look), Reflective logo, Slots for more freedom of movement, Narrow waistband",
-                            DescriptionMinimized = "multi-layer fabric, Structured fabric, Fit: slim fit, straight cut, high-waist cut, loose cut",
-                            ImageUrl = "Products/Tennis/CourtDriFitSkirtWomen.JPG",
-                            Name = "Court Dri-Fit Skirt Women",
-                            Price = 487.0,
-                            Quantity = 7,
-                            SportId = new Guid("246b70f0-2df6-4d0c-8ca1-8a431b544ecb")
-                        });
                 });
 
             modelBuilder.Entity("SportyApi.Models.Core.Domain.ReservedProgram", b =>
@@ -413,6 +365,13 @@ namespace SportyApi.Migrations
                     b.HasKey("SportId");
 
                     b.ToTable("Sports");
+
+                    b.HasData(
+                        new
+                        {
+                            SportId = new Guid("246b70f0-2df6-4d0c-8ca1-8a431b544ecb"),
+                            Name = "Tennis"
+                        });
                 });
 
             modelBuilder.Entity("SportyApi.Models.Core.Domain.TrainingProgram", b =>
@@ -464,6 +423,21 @@ namespace SportyApi.Migrations
                     b.HasIndex("SportId");
 
                     b.ToTable("TrainingPrograms");
+
+                    b.HasData(
+                        new
+                        {
+                            TrainingProgramId = new Guid("3d2b2344-0835-495d-8a02-2e8653808aad"),
+                            Description = "That would be the best split, but let’s face facts. There are a lot of you that have jobs that don’t allow this to happen, so here’s what you need to know. The only rule I suggest you follow is that you don’t train for more than three days in a row before taking a day off. Two would be best, but if you must train a third consecutive day, go for it. I don’t suggest you do this normally. For more info, please Enroll and we will contact you",
+                            DescriptionMinimized = "This program will help intermediate trainees gain size and strength. Rest-pause set, drop sets, and negatives will kick your muscle gains into high gear!",
+                            ImageUrl = "Programs/Gym/MassBuildingHypertrophyWorKout.PNG",
+                            LevelId = new Guid("0dfe7a76-f899-4b8c-aa86-495c70ff3959"),
+                            Location = "Gold's Gym - Elite San Stefano",
+                            Name = "Mass Building Hypertrophy Workout",
+                            PricePerMonth = 3000.0,
+                            Provider = "Gold's Gym",
+                            SportId = new Guid("2eb7d589-7dc9-453f-9a8d-00f53ef9449b")
+                        });
                 });
 
             modelBuilder.Entity("SportyApi.Models.Core.Domain.UserCreditCard", b =>
