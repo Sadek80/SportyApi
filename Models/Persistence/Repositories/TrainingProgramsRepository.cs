@@ -69,7 +69,7 @@ namespace SportyApi.Models.Persistence.Repositories
                                                                .Select(u => u.SportId).ToListAsync();
             var trainingPrograms = _dataContext.TrainingPrograms
                 .Include(s => s.Sport)
-                .ThenInclude(l => l.Levels) as IQueryable<TrainingProgram>;
+                .ThenInclude(l => l.Levels).OrderBy(t => t.TrainingProgramId) as IQueryable<TrainingProgram>;
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchQuery))
             {

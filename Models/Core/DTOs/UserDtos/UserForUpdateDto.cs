@@ -14,6 +14,7 @@ namespace SportyApi.Models.Core.DTOs.UserDtos
         [Required]
         public string LastName { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         public Address Address{ get; set; }
         public List<CreditCardDto> CreditCard { get; set; }

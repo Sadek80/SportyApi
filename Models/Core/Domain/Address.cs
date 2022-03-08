@@ -11,9 +11,12 @@ namespace SportyApi.Models.Core.Domain
     public class Address
     {
         [MaxLength(50)]
+        [Required]
         public string City { get; set; }
-        [MaxLength(200)]
+        [MaxLength(250)]
+        [Required]
         public string Street { get; set; }
+        [Required]
         public int BuildingNumber { get; set; }
     }
 }

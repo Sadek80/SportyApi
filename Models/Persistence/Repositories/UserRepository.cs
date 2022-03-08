@@ -145,6 +145,14 @@ namespace SportyApi.Models.Persistence.Repositories
                                                                 .FirstOrDefaultAsync(c => c.UserId == user.Id
                                                                                 && c.CreditCardId == card.CreditCardId);
 
+                            if (userCreditCard is null)
+                            {
+                                userForProfile.Success = false;
+                                userForProfile.Message = "Error Happened While Updating, you can't use the same card.";
+                                userForProfile.StatusCode = StatusCodes.Status422UnprocessableEntity;
+                                return userForProfile;
+                            }
+
                             userCreditCard.CreditCardNumber = card.CreditCardNumber;
                             userCreditCard.ExpirationDate = card.ExpirationDate;
                             userCreditCard.Zipcode = card.Zipcode;

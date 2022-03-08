@@ -31,7 +31,7 @@ namespace SportyApi.Models.Persistence.Repositories
             var userInterests = await _dataContext.UsersInterests
                                                                 .Where(ui => ui.UserId == userId)
                                                                 .Select(u => u.SportId).ToListAsync();
-            var products = _dataContext.Products.Include(p => p.Sport) as IQueryable<Product>;
+            var products = _dataContext.Products.Include(p => p.Sport).OrderBy(o => o.ProductId) as IQueryable<Product>;
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchQuery))
             {
