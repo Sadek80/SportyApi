@@ -1,8 +1,8 @@
 # Sporty
 
-This document explores the design of Sporty, a mobile app for sports community. It provides users with a bunch of training prograns and products/tools for the sports they love.
+This document explores the design of Sporty, an API for sports community. It provides users with a bunch of training prograns and products/tools for the sports they love.
 
-We will use a basic client/server architecture, where a single server is deployed
+We will use a basic MVC pattern, where a single server is deployed
 on a cloud provider next to a relational database, and serving HTTP traffic from
 a secured JWT-based API endpoints.
 
@@ -83,7 +83,7 @@ We'll need at least the following entities to implement the service:
 |---------|------|
 | UserId | uniqueidentifier |
 | ProgramId | uniqueidentifier |
-| Dare | datetimeoffset |
+| Date | datetimeoffset |
 
 
 **Products**:
@@ -202,3 +202,5 @@ The code will be hosted on SmarterASP.NET.
 
 We'll deploy the server to a (likely shared) VPS for flexibility. And we'll start with a manual deployment, to be automated
 later using Github actions or similar.
+
+Deployed Link: http://mohamedsadk889-001-site1.etempurl.com/swagger/index.html
