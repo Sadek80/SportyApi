@@ -41,12 +41,16 @@ namespace SportyApi
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDataContext>()
                                                                                                     .AddDefaultTokenProviders();
             services.Configure<JWT>(Configuration.GetSection("JWT"));
+            services.Configure<AwsCredentials>(Configuration.GetSection("AwsCredentials"));
+
 
             services.AddMemoryCache();
             services.AddHttpContextAccessor();
 
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<ICreditCardValidationService, CreditCardValidationService>();
+            services.AddTransient<IAwsLexHeadersGeneratorService, AwsLexHeadersGeneratorService>();
+
 
             services.AddControllers();
 
