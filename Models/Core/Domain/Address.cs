@@ -19,6 +19,8 @@ namespace SportyApi.Models.Core.Domain
         [Required]
         public int BuildingNumber { get; set; }
         [Required]
+        [MaxLength(20)]
+        [Phone]
         public string MobileNumber { get; set; }
     }
 }
