@@ -9,5 +9,7 @@ namespace SportyApi.Models.Core.DTOs.OrderDto
     public class OrderItemDto : OrderItemBaseDto
     {
         public string Name { get; set; }
+        public virtual string ImageUrl { get; set; }
+
     }
 }

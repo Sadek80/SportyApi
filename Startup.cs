@@ -61,7 +61,7 @@ namespace SportyApi
             services.AddSingleton(provider => new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new UserProfile());
-                cfg.AddProfile(new OrderProfile());
+                cfg.AddProfile(new OrderProfile(provider));
                 cfg.AddProfile(new ProductProfile(provider));
                 cfg.AddProfile(new TrainingProgramProfile(provider));
                 cfg.AddProfile(new SportProfile());

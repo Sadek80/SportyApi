@@ -18,5 +18,7 @@ namespace SportyApi.Models.Core.Domain
         public string Street { get; set; }
         [Required]
         public int BuildingNumber { get; set; }
+        [Required]
+        public string MobileNumber { get; set; }
     }
 }

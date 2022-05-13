@@ -32,6 +32,8 @@ namespace SportyApi.Profiles
                 .ForMember(t => t.SportName, ts => ts.MapFrom(rts => rts.TrainingProgram.Sport.Name))
                 .ForMember(t => t.Level, tl => tl.MapFrom(rtl => rtl.TrainingProgram.Level.Description))
                 .ForMember(t => t.DescriptionMinimized, rd => rd.MapFrom(rtd => rtd.TrainingProgram.DescriptionMinimized))
+                .ForMember(t => t.ImageUrl, ti => ti.MapFrom(i => $"{root}{i.TrainingProgram.ImageUrl}"))
+                .ForMember(t => t.PricePerMonth, ti => ti.MapFrom(i => i.TrainingProgram.PricePerMonth))
                 .ForMember(t => t.Date, r => r.MapFrom(rd => rd.Date.GetDateFormatted()));
 
         }

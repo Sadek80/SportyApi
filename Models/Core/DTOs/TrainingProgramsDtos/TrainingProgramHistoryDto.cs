@@ -11,6 +11,7 @@ namespace SportyApi.Models.Core.DTOs.TrainingProgramsDtos
         public string DescriptionMinimized { get; set; }
         public string Date { get; set; }
         public string SportName { get; set; }
-
+        public double PricePerMonth { get; set; }
+        public virtual string ImageUrl { get; set; }
     }
 }
