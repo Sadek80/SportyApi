@@ -203,4 +203,4 @@ The code will be hosted on SmarterASP.NET.
 We'll deploy the server to a (likely shared) VPS for flexibility. And we'll start with a manual deployment, to be automated
 later using Github actions or similar.
 
-Deployed Link: http://mohamedsadk889-001-site1.etempurl.com/swagger/index.html
+Deployed Link: http://SportyAPI.somee.com || http://ahmedssaleem-001-site1.etempurl.com
