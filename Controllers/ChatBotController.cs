@@ -34,12 +34,12 @@ namespace SportyApi.Controllers
                 return BadRequest("message invalid");
             }
 
-            var host = "runtime-v2-lex.eu-west-1.amazonaws.com";
+            var host = "runtime.lex.eu-west-1.amazonaws.com";
             var method = "POST";
-            var uriCanonical = "/bots/U8HV1XXGOY/botAliases/XQSGQ2PXPB/botLocales/en_US/sessions/123/text";
+            var uriCanonical = "/bot/sportyBot/alias/test/user/aUniqueUserID/text";
             var region = "eu-west-1";
 
-            var body = "{\"text\":\"";
+            var body = "{\"inputText\":\"";
             body += $"{message.Trim()}";
             body += "\"}";
 
@@ -88,7 +88,7 @@ namespace SportyApi.Controllers
             {
                 var result = await streamReader.ReadToEndAsync();
                 dynamic json = Newtonsoft.Json.JsonConvert.DeserializeObject(result);
-                return (string)json.messages[0].content;
+                return (string)json.message;
             }
         }
     }
