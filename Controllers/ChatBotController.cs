@@ -36,7 +36,7 @@ namespace SportyApi.Controllers
 
             var host = "runtime.lex.eu-west-1.amazonaws.com";
             var method = "POST";
-            var uriCanonical = "/bot/sportyBot/alias/test/user/aUniqueUserID/text";
+            var uriCanonical = "/bot/BotSporty/alias/BotFinale/user/aUniqueUserID/text";
             var region = "eu-west-1";
 
             var body = "{\"inputText\":\"";
